@@ -1,0 +1,347 @@
+Joey Cheung
+CS 340 - Operating Systems
+Homework #2 Unix
+
+A. Standard Directories and Files
+    1. Get a listing of your root directory.
+        [chjo5232@venus ~]$ cd /
+        [chjo5232@venus /]$ ls -l
+        total 48
+        lrwxrwxrwx.   1 root   root         7 Dec 14 09:49 bin -> usr/bin
+        dr-xr-xr-x.   6 root   root      4096 Jan 26 19:15 boot
+        drwxr-xr-x   19 root   root      3560 Jan  5 11:17 dev
+
+    2. Go to /bin directory.
+        [chjo5232@venus /]$ cd /bin
+        [chjo5232@venus bin]$ pwd
+        /bin
+
+    3. List its contents.
+        [chjo5232@venus bin]$ ls -l
+        total 460112
+        -rwxr-xr-x.   1 root root       41496 Nov  5  2016 [
+        -rwxr-xr-x.   1 root root      107856 Aug  2  2017 a2p
+        -rwxr-xr-x.   1 root root       52640 Oct 19 16:40 ab
+        -rwxr-xr-x.   1 root root       11248 Aug  9  2017 abrt-action-analyze-backtrace
+
+
+    4. List 6 commands that you recognize.
+        1. ls - list current directory Files
+        2. kill - command used to terminate process (or processes)
+        3. pwd - prints the absolute path of current working directory
+        4. mkdir - creates a directory
+        5. mv - moves one or more file/directories to another directory
+        6. rm - deletes a file/folder
+
+    5. Get a listing of the device directory. Do you recognize any device?
+        commands used and output:
+            [chjo5232@venus bin]$ cd /dev
+            [chjo5232@venus dev]$ ls -l
+            total 0
+            crw-------   1 root root     10, 235 Jan  5 11:09 autofs
+            drwxr-xr-x   2 root root         220 Jan  5 11:17 block
+            drwxr-xr-x   2 root root         120 Jan  5 11:17 bsg
+
+        The only thing I recognize are the following lines:
+            drwxr-xr-x   3 root root          60 Jan  5 11:09 bus
+            drwxr-xr-x  58 root root        1180 Jan  5 11:09 cpu
+            drwxr-xr-x   7 root root         140 Jan  5 11:17 disk
+
+    6. Go to /etc directory.
+            [chjo5232@venus dev]$ cd /etc
+            [chjo5232@venus etc]$ pwd
+            /etc
+
+    7. Do a long listing; mention a few files that you have already heard about.
+        Commands used and output:
+            [chjo5232@venus etc]$ ls -l
+            total 2800
+            drwxr-xr-x.  3 root   root        101 Dec 14 10:55 abrt
+            -rw-r--r--.  1 root   root         16 Dec 14 10:29 adjtime
+            drwxr-xr-x.  2 root   root          6 Jun  9  2014 akonadi
+        Some files I've heard about:
+            1. ssh - secure shell!
+            2. ssl - secure sockets layer!
+            3. python - the programming language!
+            4. kernel - the monolithic open-source Unix-like operating system of Ubuntu!
+            5. jvm - the java virtual machine!
+            6. maven - java build tool!
+
+    8. What is the most used permission? What does it mean?
+        The most used permission is 'r', which means readable.
+
+    9. Using cat, check the passwd file or similar; look for yourself in the file.
+        [chjo5232@venus etc]$ cat passwd
+        root:x:0:0:root:/root:/bin/bash
+        bin:x:1:1:bin:/bin:/sbin/nologin
+        daemon:x:2:2:daemon:/sbin:/sbin/nologin
+        adm:x:3:4:adm:/var/adm:/sbin/nologin
+        lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+
+
+B. Determine the absolute pathname for your home directory
+    10. Type: echo $HOME
+        [chjo5232@venus etc]$ echo $HOME
+        /home/fa19/340/chjo5232
+
+    11. Type: pwd
+        [chjo5232@venus etc]$ pwd
+        /etc
+
+C. Shell(s) and Shell Envoriment Variables
+    1. Check your default shell using: echo $SHELL
+        [chjo5232@venus etc]$ echo $SHELL
+        /bin/bash
+
+    2. Use the chsh command and find a list of available shell
+        [chjo5232@venus etc]$ chsh -l
+        /bin/sh
+        /bin/bash
+        /sbin/nologin
+        /usr/bin/sh
+        /usr/bin/bash
+
+    3. Change the current shell to a tcsh.
+        [chjo5232@venus etc]$ chsh -s /bin/tcsh'
+        Changing shell for chjo5232.
+        Password: 
+        Shell changed.
+        [chjo5232@venus etc]$ 
+
+    4. Check your new shell. The change will not be listed until the next login.
+        Last login: Thu Sep 26 14:15:11 2019 from pool-100-2-38-168.nycmny.fios.verizon.net
+
+
+        Welcome to Computer Science
+
+
+        [chjo5232@venus ~]$ 
+
+    5. Use the ps (process status – gives a lists of running processes). What do you observe?
+        [chjo5232@venus ~]$ ps
+        PID TTY          TIME CMD
+        23666 pts/15   00:00:00 tcsh
+        23707 pts/15   00:00:00 ps
+
+        Observation: the name of the first process is not the bash shell anymore, but tcsh. PS also is a process, it seems.
+
+D. Processes
+    1. Learn about the ps command using man (type man ps)
+        PS(1)                                           User Commands                                          PS(1)
+
+        NAME
+            ps - report a snapshot of the current processes.
+
+    2. Give a list of possible states together with their significance. Identify your login shell.
+        PROCESS STATE CODES
+            Here are the different values that the s, stat and state output specifiers (header "STAT" or "S") will display to
+            describe the state of a process:
+
+                D    uninterruptible sleep (usually IO)
+                R    running or runnable (on run queue)
+                S    interruptible sleep (waiting for an event to complete)
+                T    stopped by job control signal
+                t    stopped by debugger during the tracing
+                W    paging (not valid since the 2.6.xx kernel)
+                X    dead (should never be seen)
+                Z    defunct ("zombie") process, terminated but not reaped by its parent
+        Login shell was identified by the following command:
+            [chjo5232@venus ~]$ echo $SHELL
+            /bin/bash
+
+    3. Type ps –l and explain the significance of:
+    F, S, UID, PID, PPID, C, PRI, NI, ADDR, SZ, WCHAN, TTY, TIME, CMD fields.
+        F: flags
+        S: process status code
+        UID: userid of the process's owner
+        PID: process ID number
+        PPID: process ID number of process's parent process
+        C: CPU usage and scheduling information
+        PRI: priority of the process
+        NI: nice value 
+        ADDR: memory address of the process
+        SZ: virtual memory usage
+        WCHAN: memory address of the event the process is waiting for
+        TTY: terminal associated with the process
+        CMD: name of the process, inclduing arguments, if any
+
+    4. Use the top command to monitor the CPU activity in real time. It displays the status of the
+    first 15 of the most CPU-intensive task on the system as well as the CPU activity. To stop
+    the execution of top enter <ctrl-C>.
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                   
+    3867 oracle    -2   0 19.147g  15896  13836 S   2.0  0.0   1354:36 ora_vktm_venus                                           
+    26887 maal2317  20   0  158556   3164   1548 R   1.6  0.0   0:00.37 top                                                      
+    3933 oracle    20   0 19.162g 292276 274368 S   0.7  0.1 317:50.15 ora_mmon_venus                    
+
+    5. Give the total number of tasks, number of running processes, sleeping processes,
+    stopped processes and zombies.
+        [chjo5232@venus ~]$ top
+        Tasks: 931 total,   1 running, 930 sleeping,   0 stopped,   0 zombie
+    6. Identify the shell process and perform a regular kill
+	[chjo5232@venus ~]$ ps
+  	 PID TTY          TIME CMD
+ 	72802 pts/1    00:00:00 tcsh
+ 	75912 pts/1    00:00:00 ps
+
+	The shell process is 72802
+
+	[chjo5232@venus ~]$ kill 72802
+
+	Doing a regular kill does not stop the terminal at all
+
+    7. Use the sure kill command to terminate the shell
+	[chjo5232@venus ~]$ kill -9 72802
+	Last login: Thu Sep 26 14:18:23 2019 from pool-100-2-38-168.nycmny.fios.verizon.net
+
+	The O.S sometimes does not want to listen to our kill command. Even though a regular
+	kill should have killed the terminal, the command was ignored and it was still running.
+	By adding -9 as apart of the command agrument guarantees that the process will be killed.
+	It's like forcing the O.S to listen to our command.
+
+
+Part E
+    1. Use Internet sources and give an overview of the command that is used in Windows for creating a process.
+    https://msdn.microsoft.com/en-us/library/windows/desktop/ms682425(v=vs.85).aspx:
+
+        A process can be created in C++ by importing the the "windows.h" library:
+
+        BOOL WINAPI CreateProcess(
+            _In_opt_    LPCTSTR               lpApplicationName,
+            _Inout_opt_ LPTSTR                lpCommandLine,
+            _In_opt_    LPSECURITY_ATTRIBUTES lpProcessAttributes,
+            _In_opt_    LPSECURITY_ATTRIBUTES lpThreadAttributes,
+            _In_        BOOL                  bInheritHandles,
+            _In_        DWORD                 dwCreationFlags,
+            _In_opt_    LPVOID                lpEnvironment,
+            _In_opt_    LPCTSTR               lpCurrentDirectory,
+            _In_        LPSTARTUPINFO         lpStartupInfo,
+            _Out_       LPPROCESS_INFORMATION lpProcessInformation
+        );
+
+        Parameters:
+            - IpApplicationName: the application name.
+            - IpCommandLine: the command line to be executed.
+            IpPrcoessAttributes: a pointer to a SECURITY_ATTRIBUTES structure that
+            determines whether the returned handle to the new process object can 
+            be inherited by child processes.
+            - IpThreadAttributes: a pointer to a SECURITY_ATTRIBUTES structure 
+            that determines whether the returned handle to the new thread object 
+            can be inherited by child processes.
+            - bInheritHandles: if this parameter is TRUE, each inheritable handle 
+            in the calling process is inherited by the new process.
+            - dwCreationFlags: the flags that control the priority class and the
+             creation of the process. 
+            - IpEnvironment: a pointer to the environment block for the new process.
+            - IpCurrentDirectory: the full path to the current directory for the 
+            process.
+            - IpStartUpInfo: a pointer to a STARTUPINFO or STARTUPINFOEX structure.
+            - IpProcessInformation: a pointer to a PROCESS_INFORMATION structure
+             that receives identification information about the new process.
+
+    2. In a Unix environment, execute parent.c, child.c and orphan.c as follows:
+    Note: upload first the 3 files in your venus home directory.
+        
+        - gcc parent.c -o parent // this compiles the C source code file into 
+        an executable file named 'parent'.
+        - gcc child.c -o child // this compiles the C source code file into an 
+        executable file named 'child'.
+        - gcc orphan.c -o orphan // this compiles the C source code file into an 
+        executable file named 'orphan'.
+
+        Output of running parent:
+        [chjo5232@venus ~]$ ./parent    
+        
+        /* 
+        This part is executed from 'parent.c'. The first thing we do is call
+         fork(), which is a system call that creates a process. It either returns
+          -1 (cannot create process) to the caller, or a positive number (the PID
+           of the child) to the parent process and 0 to the child. The following
+            line means that the process creation was successful and the parent 
+            resumed its execution and hit the next piece of code, which was to 
+            print that line. Then, the parent process is put to sleep for 5 
+            seconds. We also see distinct process ID's from both the parent and
+             the child processes because each process has a unique process ID.
+        */
+        Process[40566]: Parent in execution ...
+        
+        /*
+        While the parent process is sleeping, the child process resumes execution
+        immediately after its creation concurrently, hence why we see the following 
+        line printed. After that line is printed, the child process goes to sleep
+         for 1 second.
+        */
+
+        Process[40567]: child in execution ...
+        
+        /*
+        Since the child process is only put to sleep for 1 second while the parent
+        process was put to sleep for 5 seconds, we see the following line printed
+        from the 'child' executable file. Immediately after the following line is
+        printed, the child process terminates.
+        */
+
+        Process[40567]: child terminating ...
+        
+        /*
+        After the child process has finished terminating, the parent process 
+        finishes it's 5 second nap and resumes execution. The next thing to 
+        execution is the 'wait(NULL)' line, which returns a positive number (the
+        first child process it detected's ID). Since it's positive since the 
+        child process terminated (while the parent process was sleeping), 
+        the following line is printed. 
+        */
+        
+        Process[40566]: Parent detects terminating child 
+        
+        /*
+        This line is immediately printed after the above line, and the parent
+        process terminates.
+        */
+        Process[40566]: Parent terminating ...
+
+        Output of running orphan:
+        [chjo5232@venus ~]$ ./orphan
+        I'm the original process with PID 74106 and PPID 73765.
+        I'm the parent process with PID 74106 and PPID 73765.
+        my child's PID 74107
+        PID 74106 terminates.
+        
+        [chjo5232@venus ~]$ I'm the child process with PID 74107 and PPID 1.
+        PID 74107 terminates.
+
+
+
+        [chjo5232@venus ~]$ ./orphan
+        /*
+        The following line is called before the fork and we see the original 
+        process ID and the parent process ID of the original process. 
+        */
+        I'm the original process with PID 187271 and PPID 187159.
+
+        /*
+        After the fork has been called, the next piece of code is the branch 
+        statement that checks if the return value from fork() is not zero. If 
+        it's not, then the return value is the PID of the child process. This 
+        is why we see the following two lines. 
+        */
+        I'm the parent process with PID 187271 and PPID 187159.
+        my child's PID 187272
+
+        /*
+        The following line indicates that the parent process never called wait() 
+        and thus does not wait for its child process to finish executing, and thus 
+        terminates before we see its child process terminate. This is what causes 
+        the child process (PID 187272) to be orphaned.
+        */
+        PID 187271 terminates.
+
+        /*
+        Before the child process terminates it's put to sleep for 5 seconds, 
+        allowing its parent process (PID 187271) to terminate first and then being
+         orphaned. When a process is orphaned, the operating system assigns the init
+          process (PID 1) as its new parent. This is why we see the child process 
+          say its PPID is 1 instead of 187272. Then, the program finally finishes 
+          executing.  
+        */
+        [chjo5232@venus ~]$ I'm the child process with PID 187272 and PPID 1.
+        PID 187272 terminates.
