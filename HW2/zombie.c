@@ -1,7 +1,3 @@
-// Alex Mancheno
-// CS 340 - Operating Systems (Spring 2018)
-// Zombie child process example
-
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
