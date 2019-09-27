@@ -262,7 +262,7 @@ Part E
             seconds. We also see distinct process ID's from both the parent and
              the child processes because each process has a unique process ID.
         */
-        Process[40566]: Parent in execution ...
+        Process[1363]: Parent in execution ...
         
         /*
         While the parent process is sleeping, the child process resumes execution
@@ -271,7 +271,7 @@ Part E
          for 1 second.
         */
 
-        Process[40567]: child in execution ...
+        Process[1364]: child in execution ...
         
         /*
         Since the child process is only put to sleep for 1 second while the parent
@@ -280,7 +280,7 @@ Part E
         printed, the child process terminates.
         */
 
-        Process[40567]: child terminating ...
+        Process[1364]: child terminating ...
         
         /*
         After the child process has finished terminating, the parent process 
@@ -291,23 +291,23 @@ Part E
         the following line is printed. 
         */
         
-        Process[40566]: Parent detects terminating child 
+        Process[1363]: Parent detects terminating child 
         
         /*
         This line is immediately printed after the above line, and the parent
         process terminates.
         */
-        Process[40566]: Parent terminating ...
+        Process[1363]: Parent terminating ...
 
         Output of running orphan:
         [chjo5232@venus ~]$ ./orphan
-        I'm the original process with PID 74106 and PPID 73765.
-        I'm the parent process with PID 74106 and PPID 73765.
-        my child's PID 74107
+        I'm the original process with PID 1424 and PPID 57053.
+        I'm the parent process with PID 1424 and PPID 57053.
+        my child's PID 1425
         PID 74106 terminates.
         
-        [chjo5232@venus ~]$ I'm the child process with PID 74107 and PPID 1.
-        PID 74107 terminates.
+        [chjo5232@venus ~]$ I'm the child process with PID 1425 and PPID 1.
+        PID 1425 terminates.
 
 
 
@@ -316,7 +316,7 @@ Part E
         The following line is called before the fork and we see the original 
         process ID and the parent process ID of the original process. 
         */
-        I'm the original process with PID 187271 and PPID 187159.
+        I'm the original process with PID 2286 and PPID 57053.
 
         /*
         After the fork has been called, the next piece of code is the branch 
@@ -324,24 +324,24 @@ Part E
         it's not, then the return value is the PID of the child process. This 
         is why we see the following two lines. 
         */
-        I'm the parent process with PID 187271 and PPID 187159.
-        my child's PID 187272
+        I'm the parent process with PID 2286 and PPID 57053.
+        my child's PID 2287
 
         /*
         The following line indicates that the parent process never called wait() 
         and thus does not wait for its child process to finish executing, and thus 
         terminates before we see its child process terminate. This is what causes 
-        the child process (PID 187272) to be orphaned.
+        the child process (PID 2287) to be orphaned.
         */
-        PID 187271 terminates.
+        PID 2287 terminates.
 
         /*
         Before the child process terminates it's put to sleep for 5 seconds, 
-        allowing its parent process (PID 187271) to terminate first and then being
+        allowing its parent process (PID 2287) to terminate first and then being
          orphaned. When a process is orphaned, the operating system assigns the init
           process (PID 1) as its new parent. This is why we see the child process 
-          say its PPID is 1 instead of 187272. Then, the program finally finishes 
+          say its PPID is 1 instead of 2287. Then, the program finally finishes 
           executing.  
         */
-        [chjo5232@venus ~]$ I'm the child process with PID 187272 and PPID 1.
-        PID 187272 terminates.
+        [chjo5232@venus ~]$ I'm the child process with PID 2287 and PPID 1.
+        PID 2287 terminates.
