@@ -170,7 +170,7 @@ D. Processes
     the execution of top enter <ctrl-C>.
     PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                   
     3867 oracle    -2   0 19.147g  15896  13836 S   2.0  0.0   1354:36 ora_vktm_venus                                           
-    26887 maal2317  20   0  158556   3164   1548 R   1.6  0.0   0:00.37 top                                                      
+    26887 chjo5232  20   0  158556   3164   1548 R   1.6  0.0   0:00.37 top                                                      
     3933 oracle    20   0 19.162g 292276 274368 S   0.7  0.1 317:50.15 ora_mmon_venus                    
 
     5. Give the total number of tasks, number of running processes, sleeping processes,
